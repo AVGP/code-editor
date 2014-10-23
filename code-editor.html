@@ -1,0 +1,62 @@
+<template>
+    <style>
+        @import "components/code-editor/codemirror/lib/codemirror.css";
+        @import "components/code-editor/codemirror/theme/monokai.css";
+
+        :host { display: block; }
+        .CodeMirror { height: 100%; }
+    </style>
+    <textarea id="editor"></textarea>
+    <!-- Hack to get the content into the textarea -->
+    <div style="display: none" id="initialContent"><content></content></div>
+</template>
+<script src="codemirror/lib/codemirror.js"></script>
+<script src="codemirror/mode/javascript/javascript.js"></script>
+<script>
+  var CodeEditor = undefined, currentScript = document.currentScript;
+  (function() {
+
+    var elemPrototype = Object.create(HTMLPreElement.prototype);
+/*    Object.defineProperty(elemPrototype, "commands", { 
+      get: function() { return this.terminal.commands; }, 
+      set: function(newCommands) { this.terminal.commands = newCommands; }
+    });*/
+
+    elemPrototype.createdCallback = function() {
+      this.root = this.createShadowRoot();
+      var tplContent = currentScript.ownerDocument.querySelector("template").content,
+          node       = document.importNode(tplContent, true);
+
+      this.root.appendChild(node);
+    };
+    
+    elemPrototype.attachedCallback = function() {
+        var editorTextArea = this.root.querySelector('#editor'),
+            initialContent = "",
+            contentNodes = this.root.querySelector('content').getDistributedNodes();
+
+        for(var i=0, len=contentNodes.length;i<len;i++) {
+          initialContent += contentNodes[i].textContent;
+        }
+
+        editorTextArea.value = initialContent;
+        editorTextArea.textContent = initialContent;
+
+        var self = this;
+        // Another hack because CodeMirror acts up when inserted before the element is attached to the DOM
+        requestAnimationFrame(function waitUntilVisible() {
+          if(self.root.querySelector("style")) {
+            console.log("init");
+            self.editor = CodeMirror.fromTextArea(editorTextArea, {theme: 'monokai', mode: 'javascript'});
+          } else requestAnimationFrame(waitUntilVisible);
+        });
+    };
+    
+    elemPrototype.attributeChangedCallback = function(attrName, oldVal, newVal) {
+      console.log(attrName, oldVal, newVal);
+      if(attrName == "commands") { this.terminal.commands = newVal; }
+    };
+
+    CodeEditor = document.registerElement("code-editor", { prototype: elemPrototype });
+  }());
+</script>
