@@ -1,7 +1,6 @@
 <template>
     <style>
-        @import "components/code-editor/codemirror/lib/codemirror.css";
-        @import "components/code-editor/codemirror/theme/monokai.css";
+        @import "/code-editor/codemirror/lib/codemirror.css";
 
         :host { display: block; }
         .CodeMirror { height: 100%; }
@@ -17,10 +16,15 @@
   (function() {
 
     var elemPrototype = Object.create(HTMLPreElement.prototype);
-/*    Object.defineProperty(elemPrototype, "commands", { 
-      get: function() { return this.terminal.commands; }, 
-      set: function(newCommands) { this.terminal.commands = newCommands; }
-    });*/
+    Object.defineProperty(elemPrototype, "theme", { 
+      get: function() { return this.editor.getOption('theme'); }, 
+      set: function(newTheme) {
+        var style = document.createElement("style");
+        style.textContent = '@import "/code-editor/codemirror/theme/' + newTheme + '.css";';
+        this.root.appendChild(style);
+        this.editor.setOption('theme', newTheme);
+      }
+    });
 
     elemPrototype.createdCallback = function() {
       this.root = this.createShadowRoot();
@@ -47,7 +51,8 @@
         requestAnimationFrame(function waitUntilVisible() {
           if(self.root.querySelector("style")) {
             console.log("init");
-            self.editor = CodeMirror.fromTextArea(editorTextArea, {theme: 'monokai', mode: 'javascript'});
+            self.editor = CodeMirror.fromTextArea(editorTextArea, {mode: 'javascript'});
+            self.theme = self.attributes.theme.value;
           } else requestAnimationFrame(waitUntilVisible);
         });
     };
