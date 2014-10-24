@@ -1,6 +1,6 @@
 <template>
     <style>
-        @import "/code-editor/codemirror/lib/codemirror.css";
+        @import "http://components.geekonaut.de/code-editor/codemirror/lib/codemirror.css";
 
         :host { display: block; }
         .CodeMirror { height: 100%; }
@@ -20,7 +20,7 @@
       get: function() { return this.editor.getOption('theme'); }, 
       set: function(newTheme) {
         var style = document.createElement("style");
-        style.textContent = '@import "/code-editor/codemirror/theme/' + newTheme + '.css";';
+        style.textContent = '@import "http://components.geekonaut.de/code-editor/codemirror/theme/' + newTheme + '.css";';
         this.root.appendChild(style);
         this.editor.setOption('theme', newTheme);
       }
