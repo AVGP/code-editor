@@ -66,6 +66,7 @@
             console.log("init");
             self.editor = CodeMirror.fromTextArea(editorTextArea, {mode: 'javascript'});
             self.theme = self.attributes.theme.value;
+            self.mode = self.attributes.mode.value;
           } else requestAnimationFrame(waitUntilVisible);
         });
     };
