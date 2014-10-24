@@ -10,12 +10,12 @@
     <div style="display: none" id="initialContent"><content></content></div>
 </template>
 <script src="codemirror/lib/codemirror.js"></script>
-<script src="codemirror/mode/javascript/javascript.js"></script>
 <script>
   var CodeEditor = undefined, currentScript = document.currentScript;
   (function() {
 
     var elemPrototype = Object.create(HTMLPreElement.prototype);
+
     Object.defineProperty(elemPrototype, "theme", { 
       get: function() { return this.editor.getOption('theme'); }, 
       set: function(newTheme) {
@@ -23,6 +23,16 @@
         style.textContent = '@import "http://components.geekonaut.de/code-editor/codemirror/theme/' + newTheme + '.css";';
         this.root.appendChild(style);
         this.editor.setOption('theme', newTheme);
+      }
+    });
+
+    Object.defineProperty(elemPrototype, "mode", { 
+      get: function() { return this.editor.getOption('mode'); }, 
+      set: function(newMode) {
+        var script = document.createElement("script");
+        script.src = 'codemirror/mode/' + newMode + '/' + newMode + '.js';
+        this.root.appendChild(script);
+        this.editor.setOption('mode', newMode);
       }
     });
 
