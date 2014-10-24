@@ -31,7 +31,7 @@
       set: function(newMode) {
         var self = this;
         var script = document.createElement("script");
-        script.src = 'codemirror/mode/' + newMode + '/' + newMode + '.js';
+        script.src = 'http://components.geekonaut.de/code-editor/codemirror/mode/' + newMode + '/' + newMode + '.js';
         script.onload = function() {
           self.editor.setOption('mode', newMode);
         };
