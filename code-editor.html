@@ -29,10 +29,13 @@
     Object.defineProperty(elemPrototype, "mode", { 
       get: function() { return this.editor.getOption('mode'); }, 
       set: function(newMode) {
+        var self = this;
         var script = document.createElement("script");
         script.src = 'codemirror/mode/' + newMode + '/' + newMode + '.js';
+        script.onload = function() {
+          self.editor.setOption('mode', newMode);
+        };
         this.root.appendChild(script);
-        this.editor.setOption('mode', newMode);
       }
     });
 
