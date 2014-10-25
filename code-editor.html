@@ -39,17 +39,17 @@
       }
     });
 
-    Object.defineProperty(elemPrototype, "textContent", { 
-      get: function() { return this.editor.getOption('textContent'); }, 
+    Object.defineProperty(elemPrototype, "srcText", { 
+      get: function() { return this.editor.getValue(); }, 
       set: function(newText) {
         this.editor.setValue(newText);
       }
     });
 
     Object.defineProperty(elemPrototype, "src", { 
-      get: function() { return this.src; }, 
+      get: function() { return this.srcUrl; }, 
       set: function(newSrcUrl) {
-        this.src = newSrcUrl;
+        this.srcUrl = newSrcUrl;
         var self = this;
         var xhr = new XMLHttpRequest();
         xhr.onload = function() {
