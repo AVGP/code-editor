@@ -84,17 +84,11 @@
         // Another hack because CodeMirror acts up when inserted before the element is attached to the DOM
         requestAnimationFrame(function waitUntilVisible() {
           if(self.root.querySelector("style")) {
-            console.log("init");
             self.editor = CodeMirror.fromTextArea(editorTextArea, {mode: 'javascript'});
             self.theme = self.attributes.theme.value;
             self.mode = self.attributes.mode.value;
           } else requestAnimationFrame(waitUntilVisible);
         });
-    };
-    
-    elemPrototype.attributeChangedCallback = function(attrName, oldVal, newVal) {
-      console.log(attrName, oldVal, newVal);
-      if(attrName == "commands") { this.terminal.commands = newVal; }
     };
 
     CodeEditor = document.registerElement("code-editor", { prototype: elemPrototype });
