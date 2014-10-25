@@ -39,6 +39,27 @@
       }
     });
 
+    Object.defineProperty(elemPrototype, "textContent", { 
+      get: function() { return this.editor.getOption('textContent'); }, 
+      set: function(newText) {
+        this.editor.setValue(newText);
+      }
+    });
+
+    Object.defineProperty(elemPrototype, "src", { 
+      get: function() { return this.src; }, 
+      set: function(newSrcUrl) {
+        this.src = newSrcUrl;
+        var self = this;
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+          self.editor.setValue(this.responseText);
+        }
+        xhr.open('get', newSrcUrl, false);
+        xhr.send();
+      }
+    });
+
     elemPrototype.createdCallback = function() {
       this.root = this.createShadowRoot();
       var tplContent = currentScript.ownerDocument.querySelector("template").content,
