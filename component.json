@@ -1,10 +1,10 @@
 {
-  'name': 'code-editor',
-  'usage': '<code-editor mode="javascript">console.log("Hello");</code-editor>',
-  'description': 'Code editor with syntax highlighting and support for loading source files or use inline code. Wrapping Codemirror.',
-  'sampleFile': 'index.html',
-  'links': {
-    'repository': 'https://github.com/avgp/code-editor',
-    'documentation': 'https://github.com/AVGP/code-editor/blob/gh-pages/README.md'
+  "name": "code-editor",
+  "usage": "<code-editor mode=\"javascript\">console.log(\"Hello\");</code-editor>",
+  "description": "Code editor with syntax highlighting and support for loading source files or use inline code. Wrapping Codemirror.",
+  "sampleFile": "index.html",
+  "links": {
+    "repository": "https://github.com/avgp/code-editor",
+    "documentation": "https://github.com/AVGP/code-editor/blob/gh-pages/README.md"
   }
 }
