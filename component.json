@@ -1,6 +1,6 @@
 {
   "name": "code-editor",
-  "usage": "<code-editor mode=\"javascript\">console.log(\"Hello\");</code-editor>",
+  "usage": "<code-editor mode=\"javascript\">\n\tconsole.log(\"Hello\");\n</code-editor>",
   "description": "Code editor with syntax highlighting and support for loading source files or use inline code. Wrapping Codemirror.",
   "links": {
     "demo": "https://avgp.github.io/code-editor/index.html",
