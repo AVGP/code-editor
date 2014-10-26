@@ -1,4 +1,4 @@
-code-box
+code-editor
 ========
 
 Code editor web component, wrapping CodeMirror
