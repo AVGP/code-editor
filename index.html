@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>code-editor demo</title>
+  <link rel="import" href="http://components.geekonaut.de/code-editor/code-editor.html">
+</head>
+<body>
+  <h1>&lt;code-editor&gt;</h1>
+
+  <h2>Simple inline demo</h2>
+  <code-editor id="demo2" theme="monokai" mode="ruby">
+    def greet(name)
+      puts "Hi, #{name}"
+    end
+
+    greet("John")
+  </code-editor>
+
+  <h2>Loading the source from a file</h2>
+  <code-editor src="http://components.geekonaut.de/code-editor/mode/javascript/javascript.js" mode="javascript"></code-editor>
+  
+  <h2>Setting the content and mode programmatically</h2>
+  <code-editor id="demo2" theme="monokai" mode="javascript"></code-editor>
+  <script>
+    var editor = document.getElementById("demo2");
+    editor.src = "http://components.geekonaut.de/code-editor/codemirror/mode/javascript/javascript.js";
+    editor.mode = 'javascript';
+  </script>
+</body>
+</html>
