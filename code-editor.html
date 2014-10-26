@@ -85,8 +85,10 @@
         requestAnimationFrame(function waitUntilVisible() {
           if(self.root.querySelector("style")) {
             self.editor = CodeMirror.fromTextArea(editorTextArea, {mode: 'javascript'});
+
             self.theme = self.attributes.theme.value;
-            self.mode = self.attributes.mode.value;
+            self.mode  = self.attributes.mode.value;
+            self.src   = self.attributes.src.value;
           } else requestAnimationFrame(waitUntilVisible);
         });
     };
