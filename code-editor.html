@@ -14,7 +14,8 @@
   var CodeEditor = undefined;
   (function(currentScript) {
 
-    var elemPrototype = Object.create(HTMLPreElement.prototype);
+    var elemPrototype = Object.create(HTMLPreElement.prototype),
+        editorReadyCallbacks = [];
 
     Object.defineProperty(elemPrototype, "theme", {
       get: function() { return this.editor.getOption('theme'); },
@@ -89,9 +90,22 @@
             if(self.attributes.theme) self.theme = self.attributes.theme.value;
             if(self.attributes.mode)  self.mode  = self.attributes.mode.value;
             if(self.attributes.src)   self.src   = self.attributes.src.value;
+
+            var i = editorReadyCallbacks.length;
+            while(i--) {
+              setTimeout(editorReadyCallbacks[i], 1);
+            }
           } else requestAnimationFrame(waitUntilVisible);
         });
     };
+
+    elemPrototype.onReady = function(callback) {
+      if(this.editor) {
+        callback();
+        return;
+      }
+      editorReadyCallbacks.push(callback);
+    }
 
     CodeEditor = document.registerElement("code-editor", { prototype: elemPrototype });
   }(document.currentScript));
