@@ -11,13 +11,13 @@
 </template>
 <script src="codemirror/lib/codemirror.js"></script>
 <script>
-  var CodeEditor = undefined, currentScript = document.currentScript;
-  (function() {
+  var CodeEditor = undefined;
+  (function(currentScript) {
 
     var elemPrototype = Object.create(HTMLPreElement.prototype);
 
-    Object.defineProperty(elemPrototype, "theme", { 
-      get: function() { return this.editor.getOption('theme'); }, 
+    Object.defineProperty(elemPrototype, "theme", {
+      get: function() { return this.editor.getOption('theme'); },
       set: function(newTheme) {
         var style = document.createElement("style");
         style.textContent = '@import "http://components.geekonaut.de/code-editor/codemirror/theme/' + newTheme + '.css";';
@@ -26,8 +26,8 @@
       }
     });
 
-    Object.defineProperty(elemPrototype, "mode", { 
-      get: function() { return this.editor.getOption('mode'); }, 
+    Object.defineProperty(elemPrototype, "mode", {
+      get: function() { return this.editor.getOption('mode'); },
       set: function(newMode) {
         var self = this;
         var script = document.createElement("script");
@@ -39,15 +39,15 @@
       }
     });
 
-    Object.defineProperty(elemPrototype, "srcText", { 
-      get: function() { return this.editor.getValue(); }, 
+    Object.defineProperty(elemPrototype, "srcText", {
+      get: function() { return this.editor.getValue(); },
       set: function(newText) {
         this.editor.setValue(newText);
       }
     });
 
-    Object.defineProperty(elemPrototype, "src", { 
-      get: function() { return this.srcUrl; }, 
+    Object.defineProperty(elemPrototype, "src", {
+      get: function() { return this.srcUrl; },
       set: function(newSrcUrl) {
         this.srcUrl = newSrcUrl;
         var self = this;
@@ -67,7 +67,7 @@
 
       this.root.appendChild(node);
     };
-    
+
     elemPrototype.attachedCallback = function() {
         var editorTextArea = this.root.querySelector('#editor'),
             initialContent = "",
@@ -94,5 +94,5 @@
     };
 
     CodeEditor = document.registerElement("code-editor", { prototype: elemPrototype });
-  }());
+  }(document.currentScript));
 </script>
