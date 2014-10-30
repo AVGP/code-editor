@@ -108,5 +108,5 @@
     }
 
     CodeEditor = document.registerElement("code-editor", { prototype: elemPrototype });
-  }(document.currentScript));
+  }(document._currentScript || document.currentScript));
 </script>
